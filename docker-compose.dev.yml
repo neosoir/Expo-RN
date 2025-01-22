@@ -1,0 +1,40 @@
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: DockerFile.dev
+    image: img_app_dev:1.0
+    restart: always
+    container_name: ctr_app_dev
+    ports:
+      - "3000:3000"
+      - "8081:8081"
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+      - "19006:19006"
+    # Si tienes servicios adicionales, habilita esta sección
+    # depends_on:
+    #   - api
+    environment:
+      - TZ=America/Mexico_City
+    volumes:
+      - ./app:/client:rw,uid=1000,gid=1000 
+    networks:
+      - net_app_dev
+    # Comandos que puedes habilitar según lo que necesites
+    # command: /bin/bash -c "if [ ! -d node_modules ]; then npm install; fi && npm run android"
+    # command: /bin/bash -c "if [ ! -d node_modules ]; then npm install; fi && npm run web"
+
+    command: /bin/bash -c "if [ ! -d node_modules ]; then npm install; fi && tail -f /dev/null"
+
+
+networks:
+  net_app_dev:
+    name: net_app_dev
+    driver: bridge
+
+# Volúmenes adicionales (si es necesario, descomenta esta sección)
+# volumes:
+#   vol_db_dev:
+#     name: vol_db_dev
