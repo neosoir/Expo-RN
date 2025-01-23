@@ -8,8 +8,7 @@ USER node
 WORKDIR /client
 
 # Copiar los archivos del proyecto al contenedor
-COPY --chown=node:node . /client
+COPY --chown=node:node . /clientq
 
 # Exponer los puertos necesarios
-EXPOSE 8081
-
+EXPOSE 8081 19000 19001 19002
